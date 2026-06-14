@@ -708,6 +708,26 @@
     .podium-avatar-4 { width: 38px; height: 38px; }
     .groups-grid { grid-template-columns: 1fr; }
   }
+
+  /* KICKOFF TIMES */
+  .kickoff-times {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+    margin-top: 0.15rem;
+  }
+  .kickoff-local {
+    font-size: 0.65rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .kickoff-nz {
+    font-size: 0.65rem;
+    color: var(--gold);
+    font-weight: 700;
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body>
@@ -883,94 +903,94 @@ const groups = [
 // UPDATE THIS SECTION DAILY
 const fixtures = [
   // ── JUNE 11 ──
-  { date:'2026-06-11', group:'A', home:'Mexico',       away:'South Africa',  score:[2,0] },
-  { date:'2026-06-11', group:'A', home:'South Korea',  away:'Czechia',       score:[2,1] },
+  { date:'2026-06-11', group:'A', home:'Mexico',       away:'South Africa',  score:[2,0] , kickoff:'2026-06-11T19:00Z', tz:'America/Mexico_City'},
+  { date:'2026-06-11', group:'A', home:'South Korea',  away:'Czechia',       score:[2,1] , kickoff:'2026-06-12T02:00Z', tz:'America/Mexico_City'},
   // ── JUNE 12 ──
-  { date:'2026-06-12', group:'B', home:'Canada',       away:'Bosnia-Herzegovina', score:[1,1] },
-  { date:'2026-06-12', group:'D', home:'USA',          away:'Paraguay',      score:[4,1] },
+  { date:'2026-06-12', group:'B', home:'Canada',       away:'Bosnia-Herzegovina', score:[1,1] , kickoff:'2026-06-12T19:00Z', tz:'America/Toronto'},
+  { date:'2026-06-12', group:'D', home:'USA',          away:'Paraguay',      score:[4,1] , kickoff:'2026-06-13T01:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 13 ──
-  { date:'2026-06-13', group:'B', home:'Qatar',        away:'Switzerland',   score:[1,1] },
-  { date:'2026-06-13', group:'C', home:'Brazil',       away:'Morocco',       score:[1,1] },
-  { date:'2026-06-13', group:'C', home:'Haiti',        away:'Scotland',      score:[0,1] },
-  { date:'2026-06-13', group:'D', home:'Australia',    away:'Türkiye',        score:null },
+  { date:'2026-06-13', group:'B', home:'Qatar',        away:'Switzerland',   score:[1,1] , kickoff:'2026-06-13T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-13', group:'C', home:'Brazil',       away:'Morocco',       score:[1,1] , kickoff:'2026-06-13T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-13', group:'C', home:'Haiti',        away:'Scotland',      score:[0,1] , kickoff:'2026-06-14T01:00Z', tz:'America/New_York'},
+  { date:'2026-06-13', group:'D', home:'Australia',    away:'Türkiye',        score:null , kickoff:'2026-06-14T04:00Z', tz:'America/Vancouver'},
   // ── JUNE 14 ──
-  { date:'2026-06-14', group:'E', home:'Germany',      away:'Curaçao',       score:null },
-  { date:'2026-06-14', group:'F', home:'Netherlands',  away:'Japan',         score:null },
-  { date:'2026-06-14', group:'E', home:'Ivory Coast',  away:'Ecuador',       score:null },
-  { date:'2026-06-14', group:'F', home:'Sweden',       away:'Tunisia',       score:null },
+  { date:'2026-06-14', group:'E', home:'Germany',      away:'Curaçao',       score:null , kickoff:'2026-06-14T17:00Z', tz:'America/Chicago'},
+  { date:'2026-06-14', group:'F', home:'Netherlands',  away:'Japan',         score:null , kickoff:'2026-06-14T20:00Z', tz:'America/Chicago'},
+  { date:'2026-06-14', group:'E', home:'Ivory Coast',  away:'Ecuador',       score:null , kickoff:'2026-06-14T23:00Z', tz:'America/New_York'},
+  { date:'2026-06-14', group:'F', home:'Sweden',       away:'Tunisia',       score:null , kickoff:'2026-06-15T02:00Z', tz:'America/Monterrey'},
   // ── JUNE 15 ──
-  { date:'2026-06-15', group:'H', home:'Spain',        away:'Cape Verde',    score:null },
-  { date:'2026-06-15', group:'G', home:'Belgium',      away:'Egypt',         score:null },
-  { date:'2026-06-15', group:'H', home:'Saudi Arabia', away:'Uruguay',       score:null },
-  { date:'2026-06-15', group:'G', home:'Iran',         away:'New Zealand',   score:null },
+  { date:'2026-06-15', group:'H', home:'Spain',        away:'Cape Verde',    score:null , kickoff:'2026-06-15T16:00Z', tz:'America/New_York'},
+  { date:'2026-06-15', group:'G', home:'Belgium',      away:'Egypt',         score:null , kickoff:'2026-06-15T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-15', group:'H', home:'Saudi Arabia', away:'Uruguay',       score:null , kickoff:'2026-06-15T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-15', group:'G', home:'Iran',         away:'New Zealand',   score:null , kickoff:'2026-06-16T01:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 16 ──
-  { date:'2026-06-16', group:'I', home:'France',       away:'Senegal',       score:null },
-  { date:'2026-06-16', group:'I', home:'Iraq',         away:'Norway',        score:null },
-  { date:'2026-06-16', group:'J', home:'Argentina',    away:'Algeria',       score:null },
-  { date:'2026-06-16', group:'J', home:'Austria',      away:'Jordan',        score:null },
+  { date:'2026-06-16', group:'I', home:'France',       away:'Senegal',       score:null , kickoff:'2026-06-16T19:00Z', tz:'America/New_York'},
+  { date:'2026-06-16', group:'I', home:'Iraq',         away:'Norway',        score:null , kickoff:'2026-06-16T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-16', group:'J', home:'Argentina',    away:'Algeria',       score:null , kickoff:'2026-06-17T01:00Z', tz:'America/Chicago'},
+  { date:'2026-06-16', group:'J', home:'Austria',      away:'Jordan',        score:null , kickoff:'2026-06-17T04:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 17 ──
-  { date:'2026-06-17', group:'K', home:'Portugal',     away:'Congo DR',      score:null },
-  { date:'2026-06-17', group:'L', home:'England',      away:'Croatia',       score:null },
-  { date:'2026-06-17', group:'L', home:'Ghana',        away:'Panama',        score:null },
-  { date:'2026-06-17', group:'K', home:'Uzbekistan',   away:'Colombia',      score:null },
+  { date:'2026-06-17', group:'K', home:'Portugal',     away:'Congo DR',      score:null , kickoff:'2026-06-17T17:00Z', tz:'America/Chicago'},
+  { date:'2026-06-17', group:'L', home:'England',      away:'Croatia',       score:null , kickoff:'2026-06-17T20:00Z', tz:'America/Chicago'},
+  { date:'2026-06-17', group:'L', home:'Ghana',        away:'Panama',        score:null , kickoff:'2026-06-17T23:00Z', tz:'America/Toronto'},
+  { date:'2026-06-17', group:'K', home:'Uzbekistan',   away:'Colombia',      score:null , kickoff:'2026-06-18T02:00Z', tz:'America/Mexico_City'},
   // ── JUNE 18 ──
-  { date:'2026-06-18', group:'A', home:'Czechia',      away:'South Africa',  score:null },
-  { date:'2026-06-18', group:'B', home:'Switzerland',  away:'Bosnia-Herzegovina', score:null },
-  { date:'2026-06-18', group:'B', home:'Canada',       away:'Qatar',         score:null },
-  { date:'2026-06-18', group:'A', home:'Mexico',       away:'South Korea',   score:null },
+  { date:'2026-06-18', group:'A', home:'Czechia',      away:'South Africa',  score:null , kickoff:'2026-06-18T16:00Z', tz:'America/New_York'},
+  { date:'2026-06-18', group:'B', home:'Switzerland',  away:'Bosnia-Herzegovina', score:null , kickoff:'2026-06-18T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-18', group:'B', home:'Canada',       away:'Qatar',         score:null , kickoff:'2026-06-18T22:00Z', tz:'America/Vancouver'},
+  { date:'2026-06-18', group:'A', home:'Mexico',       away:'South Korea',   score:null , kickoff:'2026-06-19T01:00Z', tz:'America/Mexico_City'},
   // ── JUNE 19 ──
-  { date:'2026-06-19', group:'C', home:'Scotland',     away:'Morocco',       score:null },
-  { date:'2026-06-19', group:'D', home:'USA',          away:'Australia',     score:null },
-  { date:'2026-06-19', group:'C', home:'Brazil',       away:'Haiti',         score:null },
-  { date:'2026-06-19', group:'D', home:'Türkiye',       away:'Paraguay',      score:null },
+  { date:'2026-06-19', group:'C', home:'Scotland',     away:'Morocco',       score:null , kickoff:'2026-06-19T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-19', group:'D', home:'USA',          away:'Australia',     score:null , kickoff:'2026-06-19T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-19', group:'C', home:'Brazil',       away:'Haiti',         score:null , kickoff:'2026-06-20T00:30Z', tz:'America/New_York'},
+  { date:'2026-06-19', group:'D', home:'Türkiye',       away:'Paraguay',      score:null , kickoff:'2026-06-20T03:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 20 ──
-  { date:'2026-06-20', group:'F', home:'Netherlands',  away:'Sweden',        score:null },
-  { date:'2026-06-20', group:'E', home:'Germany',      away:'Ivory Coast',   score:null },
-  { date:'2026-06-20', group:'E', home:'Ecuador',      away:'Curaçao',       score:null },
-  { date:'2026-06-20', group:'F', home:'Tunisia',      away:'Japan',         score:null },
+  { date:'2026-06-20', group:'F', home:'Netherlands',  away:'Sweden',        score:null , kickoff:'2026-06-20T17:00Z', tz:'America/Chicago'},
+  { date:'2026-06-20', group:'E', home:'Germany',      away:'Ivory Coast',   score:null , kickoff:'2026-06-20T20:00Z', tz:'America/Toronto'},
+  { date:'2026-06-20', group:'E', home:'Ecuador',      away:'Curaçao',       score:null , kickoff:'2026-06-21T00:00Z', tz:'America/Chicago'},
+  { date:'2026-06-20', group:'F', home:'Tunisia',      away:'Japan',         score:null , kickoff:'2026-06-21T04:00Z', tz:'America/Monterrey'},
   // ── JUNE 21 ──
-  { date:'2026-06-21', group:'H', home:'Spain',        away:'Saudi Arabia',  score:null },
-  { date:'2026-06-21', group:'G', home:'Belgium',      away:'Iran',          score:null },
-  { date:'2026-06-21', group:'H', home:'Uruguay',      away:'Cape Verde',    score:null },
-  { date:'2026-06-21', group:'G', home:'New Zealand',  away:'Egypt',         score:null },
+  { date:'2026-06-21', group:'H', home:'Spain',        away:'Saudi Arabia',  score:null , kickoff:'2026-06-21T16:00Z', tz:'America/New_York'},
+  { date:'2026-06-21', group:'G', home:'Belgium',      away:'Iran',          score:null , kickoff:'2026-06-21T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-21', group:'H', home:'Uruguay',      away:'Cape Verde',    score:null , kickoff:'2026-06-21T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-21', group:'G', home:'New Zealand',  away:'Egypt',         score:null , kickoff:'2026-06-22T01:00Z', tz:'America/Vancouver'},
   // ── JUNE 22 ──
-  { date:'2026-06-22', group:'J', home:'Argentina',    away:'Austria',       score:null },
-  { date:'2026-06-22', group:'I', home:'France',       away:'Iraq',          score:null },
-  { date:'2026-06-22', group:'I', home:'Norway',       away:'Senegal',       score:null },
-  { date:'2026-06-22', group:'J', home:'Jordan',       away:'Algeria',       score:null },
+  { date:'2026-06-22', group:'J', home:'Argentina',    away:'Austria',       score:null , kickoff:'2026-06-22T17:00Z', tz:'America/Chicago'},
+  { date:'2026-06-22', group:'I', home:'France',       away:'Iraq',          score:null , kickoff:'2026-06-22T21:00Z', tz:'America/New_York'},
+  { date:'2026-06-22', group:'I', home:'Norway',       away:'Senegal',       score:null , kickoff:'2026-06-23T00:00Z', tz:'America/New_York'},
+  { date:'2026-06-22', group:'J', home:'Jordan',       away:'Algeria',       score:null , kickoff:'2026-06-23T03:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 23 ──
-  { date:'2026-06-23', group:'K', home:'Portugal',     away:'Uzbekistan',    score:null },
-  { date:'2026-06-23', group:'L', home:'England',      away:'Ghana',         score:null },
-  { date:'2026-06-23', group:'L', home:'Panama',       away:'Croatia',       score:null },
-  { date:'2026-06-23', group:'K', home:'Colombia',     away:'Congo DR',      score:null },
+  { date:'2026-06-23', group:'K', home:'Portugal',     away:'Uzbekistan',    score:null , kickoff:'2026-06-23T17:00Z', tz:'America/Chicago'},
+  { date:'2026-06-23', group:'L', home:'England',      away:'Ghana',         score:null , kickoff:'2026-06-23T20:00Z', tz:'America/New_York'},
+  { date:'2026-06-23', group:'L', home:'Panama',       away:'Croatia',       score:null , kickoff:'2026-06-23T23:00Z', tz:'America/Toronto'},
+  { date:'2026-06-23', group:'K', home:'Colombia',     away:'Congo DR',      score:null , kickoff:'2026-06-24T02:00Z', tz:'America/Mexico_City'},
   // ── JUNE 24 ──
-  { date:'2026-06-24', group:'B', home:'Switzerland',  away:'Canada',        score:null },
-  { date:'2026-06-24', group:'B', home:'Bosnia-Herzegovina', away:'Qatar',   score:null },
-  { date:'2026-06-24', group:'C', home:'Scotland',     away:'Brazil',        score:null },
-  { date:'2026-06-24', group:'C', home:'Morocco',      away:'Haiti',         score:null },
-  { date:'2026-06-24', group:'A', home:'Czechia',      away:'Mexico',        score:null },
-  { date:'2026-06-24', group:'A', home:'South Africa', away:'South Korea',   score:null },
+  { date:'2026-06-24', group:'B', home:'Switzerland',  away:'Canada',        score:null , kickoff:'2026-06-24T19:00Z', tz:'America/Vancouver'},
+  { date:'2026-06-24', group:'B', home:'Bosnia-Herzegovina', away:'Qatar',   score:null , kickoff:'2026-06-24T19:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-24', group:'C', home:'Scotland',     away:'Brazil',        score:null , kickoff:'2026-06-24T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-24', group:'C', home:'Morocco',      away:'Haiti',         score:null , kickoff:'2026-06-24T22:00Z', tz:'America/New_York'},
+  { date:'2026-06-24', group:'A', home:'Czechia',      away:'Mexico',        score:null , kickoff:'2026-06-25T01:00Z', tz:'America/Mexico_City'},
+  { date:'2026-06-24', group:'A', home:'South Africa', away:'South Korea',   score:null , kickoff:'2026-06-25T01:00Z', tz:'America/Monterrey'},
   // ── JUNE 25 ──
-  { date:'2026-06-25', group:'E', home:'Ecuador',      away:'Germany',       score:null },
-  { date:'2026-06-25', group:'E', home:'Curaçao',      away:'Ivory Coast',   score:null },
-  { date:'2026-06-25', group:'F', home:'Japan',        away:'Sweden',        score:null },
-  { date:'2026-06-25', group:'F', home:'Tunisia',      away:'Netherlands',   score:null },
-  { date:'2026-06-25', group:'D', home:'Türkiye',       away:'USA',           score:null },
-  { date:'2026-06-25', group:'D', home:'Paraguay',     away:'Australia',     score:null },
+  { date:'2026-06-25', group:'E', home:'Ecuador',      away:'Germany',       score:null , kickoff:'2026-06-25T20:00Z', tz:'America/New_York'},
+  { date:'2026-06-25', group:'E', home:'Curaçao',      away:'Ivory Coast',   score:null , kickoff:'2026-06-25T20:00Z', tz:'America/New_York'},
+  { date:'2026-06-25', group:'F', home:'Japan',        away:'Sweden',        score:null , kickoff:'2026-06-25T23:00Z', tz:'America/Chicago'},
+  { date:'2026-06-25', group:'F', home:'Tunisia',      away:'Netherlands',   score:null , kickoff:'2026-06-25T23:00Z', tz:'America/Chicago'},
+  { date:'2026-06-25', group:'D', home:'Türkiye',       away:'USA',           score:null , kickoff:'2026-06-26T02:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-25', group:'D', home:'Paraguay',     away:'Australia',     score:null , kickoff:'2026-06-26T02:00Z', tz:'America/Los_Angeles'},
   // ── JUNE 26 ──
-  { date:'2026-06-26', group:'I', home:'Norway',       away:'France',        score:null },
-  { date:'2026-06-26', group:'I', home:'Senegal',      away:'Iraq',          score:null },
-  { date:'2026-06-26', group:'H', home:'Cape Verde',   away:'Saudi Arabia',  score:null },
-  { date:'2026-06-26', group:'H', home:'Uruguay',      away:'Spain',         score:null },
-  { date:'2026-06-26', group:'G', home:'Egypt',        away:'Iran',          score:null },
-  { date:'2026-06-26', group:'G', home:'New Zealand',  away:'Belgium',       score:null },
+  { date:'2026-06-26', group:'I', home:'Norway',       away:'France',        score:null , kickoff:'2026-06-26T19:00Z', tz:'America/New_York'},
+  { date:'2026-06-26', group:'I', home:'Senegal',      away:'Iraq',          score:null , kickoff:'2026-06-26T19:00Z', tz:'America/Toronto'},
+  { date:'2026-06-26', group:'H', home:'Cape Verde',   away:'Saudi Arabia',  score:null , kickoff:'2026-06-27T00:00Z', tz:'America/Chicago'},
+  { date:'2026-06-26', group:'H', home:'Uruguay',      away:'Spain',         score:null , kickoff:'2026-06-27T00:00Z', tz:'America/Mexico_City'},
+  { date:'2026-06-26', group:'G', home:'Egypt',        away:'Iran',          score:null , kickoff:'2026-06-27T03:00Z', tz:'America/Los_Angeles'},
+  { date:'2026-06-26', group:'G', home:'New Zealand',  away:'Belgium',       score:null , kickoff:'2026-06-27T03:00Z', tz:'America/Vancouver'},
   // ── JUNE 27 ──
-  { date:'2026-06-27', group:'L', home:'Panama',       away:'England',       score:null },
-  { date:'2026-06-27', group:'L', home:'Croatia',      away:'Ghana',         score:null },
-  { date:'2026-06-27', group:'K', home:'Colombia',     away:'Portugal',      score:null },
-  { date:'2026-06-27', group:'K', home:'Congo DR',     away:'Uzbekistan',    score:null },
-  { date:'2026-06-27', group:'J', home:'Algeria',      away:'Austria',       score:null },
-  { date:'2026-06-27', group:'J', home:'Jordan',       away:'Argentina',     score:null },
+  { date:'2026-06-27', group:'L', home:'Panama',       away:'England',       score:null , kickoff:'2026-06-27T21:00Z', tz:'America/New_York'},
+  { date:'2026-06-27', group:'L', home:'Croatia',      away:'Ghana',         score:null , kickoff:'2026-06-27T21:00Z', tz:'America/New_York'},
+  { date:'2026-06-27', group:'K', home:'Colombia',     away:'Portugal',      score:null , kickoff:'2026-06-27T23:30Z', tz:'America/New_York'},
+  { date:'2026-06-27', group:'K', home:'Congo DR',     away:'Uzbekistan',    score:null , kickoff:'2026-06-27T23:30Z', tz:'America/New_York'},
+  { date:'2026-06-27', group:'J', home:'Algeria',      away:'Austria',       score:null , kickoff:'2026-06-28T02:00Z', tz:'America/Chicago'},
+  { date:'2026-06-27', group:'J', home:'Jordan',       away:'Argentina',     score:null , kickoff:'2026-06-28T02:00Z', tz:'America/Chicago'},
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1080,7 +1100,7 @@ function renderLivePanel() {
     const aOwner  = teamOwner[g.away];
     const hPlayer = hOwner ? players[hOwner] : null;
     const aPlayer = aOwner ? players[aOwner] : null;
-    const isClash = hOwner && aOwner && hOwner !== aOwner;
+    const isClash = hOwner && aOwner && hOwner === aOwner;
 
     const halfLabel = g.isHalftime ? 'Half Time'
       : g.period === 1 ? '1st Half'
@@ -1113,7 +1133,7 @@ function renderLivePanel() {
           ${ownerTag(aOwner, aPlayer)}
         </div>
       </div>
-      ${isClash ? `<div class="live-clash-tag">⚔️ Family Clash!</div>` : ''}
+      ${isClash ? `<div class="live-clash-tag">⚔️ Same player — both teams!</div>` : ''}
     </div>`;
   }).join('');
 
@@ -1285,6 +1305,24 @@ function renderGroups(standings) {
   }).join('');
 }
 
+
+function formatKickoff(kickoff, tz) {
+  if (!kickoff || !tz) return null;
+  try {
+    const d = new Date(kickoff);
+    const local = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'
+    }).format(d);
+    const nz = new Intl.DateTimeFormat('en-NZ', {
+      timeZone: 'Pacific/Auckland',
+      weekday: 'short', day: 'numeric', month: 'short',
+      hour: 'numeric', minute: '2-digit', hour12: true
+    }).format(d);
+    return { local, nz };
+  } catch(e) { return null; }
+}
+
 function renderFixtures() {
   const today = new Date().toISOString().slice(0, 10);
   const byDate = {};
@@ -1304,7 +1342,7 @@ function renderFixtures() {
     const matchHtml = matches.map(f => {
       const hOwner = teamOwner[f.home];
       const aOwner = teamOwner[f.away];
-      const isClash = hOwner && aOwner && hOwner !== aOwner;
+      const isClash = hOwner && aOwner && hOwner === aOwner;
       const played = f.score !== null;
 
       const liveKey    = f.home + ' vs ' + f.away;
@@ -1331,6 +1369,7 @@ function renderFixtures() {
 
       const hCol = hOwner ? players[hOwner].color : 'var(--text)';
       const aCol = aOwner ? players[aOwner].color : 'var(--text)';
+      const times = f.kickoff ? formatKickoff(f.kickoff, f.tz) : null;
 
       return `<div class="fixture ${isClash?'family-clash':''} ${played?'played':''}">
         <span class="group-badge">Grp ${f.group}</span>
@@ -1348,7 +1387,13 @@ function renderFixtures() {
             <span style="font-size:0.65rem;opacity:0.7">(${aOwner||'?'})</span>
           </div>
         </div>
-        <div class="fixture-meta">${winnerTag}</div>
+        <div class="fixture-meta">
+          ${winnerTag}
+          ${times ? `<div class="kickoff-times">
+            <div class="kickoff-local">⏰ ${times.local}</div>
+            <div class="kickoff-nz">🇳🇿 ${times.nz} NZT</div>
+          </div>` : ''}
+        </div>
       </div>`;
     }).join('');
 
