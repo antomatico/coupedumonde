@@ -13,7 +13,7 @@
     --papa-light: rgba(132,204,22,0.15);
     --luly: #ca8a04;
     --luly-light: rgba(202,138,4,0.15);
-    --james: #0ea5e9;
+    --james: #FF10F0;
     --james-light: rgba(14,165,233,0.15);
     --cleo: #14b8a6;
     --cleo-light: rgba(20,184,166,0.15);
@@ -832,7 +832,7 @@
 const players = {
   Papa:  { color: '#84cc16', bg: 'rgba(132,204,22,0.15)',  emoji: '🟢' },
   Luly:  { color: '#ca8a04', bg: 'rgba(202,138,4,0.15)',   emoji: '🟡' },
-  James: { color: '#0ea5e9', bg: 'rgba(14,165,233,0.15)',  emoji: '🔵' },
+  James: { color: '#FF10F0', bg: 'rgba(255,16,240,0.15)',  emoji: '🔵' },
   Cleo:  { color: '#14b8a6', bg: 'rgba(20,184,166,0.15)',  emoji: '🩵' },
 };
 
@@ -840,7 +840,7 @@ const flags = {
   'Mexico': '🇲🇽', 'South Africa': '🇿🇦', 'South Korea': '🇰🇷', 'Czechia': '🇨🇿',
   'Canada': '🇨🇦', 'Bosnia Herzegovina': '🇧🇦', 'Qatar': '🇶🇦', 'Switzerland': '🇨🇭',
   'Brazil': '🇧🇷', 'Morocco': '🇲🇦', 'Haiti': '🇭🇹', 'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-  'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Australia': '🇦🇺', 'Turkey': '🇹🇷',
+  'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Australia': '🇦🇺', 'Türkiye': '🇹🇷',
   'Germany': '🇩🇪', 'Curaçao': '🇨🇼', 'Ivory Coast': '🇨🇮', 'Ecuador': '🇪🇨',
   'Netherlands': '🇳🇱', 'Japan': '🇯🇵', 'Sweden': '🇸🇪', 'Tunisia': '🇹🇳',
   'Belgium': '🇧🇪', 'Egypt': '🇪🇬', 'Iran': '🇮🇷', 'New Zealand': '🇳🇿',
@@ -856,7 +856,7 @@ const teamOwner = {
   'Mexico':'Cleo','South Africa':'James','South Korea':'Luly','Czechia':'James',
   'Canada':'Papa','Bosnia Herzegovina':'Papa','Qatar':'James','Switzerland':'Papa',
   'Brazil':'James','Morocco':'Cleo','Haiti':'Cleo','Scotland':'Luly',
-  'USA':'James','Paraguay':'Cleo','Australia':'Papa','Turkey':'Papa',
+  'USA':'James','Paraguay':'Cleo','Australia':'Papa','Türkiye':'Papa',
   'Germany':'Luly','Curaçao':'Papa','Ivory Coast':'Cleo','Ecuador':'Papa',
   'Netherlands':'Luly','Japan':'James','Sweden':'Luly','Tunisia':'Luly',
   'Belgium':'Luly','Egypt':'Luly','Iran':'Cleo','New Zealand':'Papa',
@@ -871,7 +871,7 @@ const groups = [
   { id:'A', teams:['Mexico','South Africa','South Korea','Czechia'] },
   { id:'B', teams:['Canada','Bosnia Herzegovina','Qatar','Switzerland'] },
   { id:'C', teams:['Brazil','Morocco','Haiti','Scotland'] },
-  { id:'D', teams:['USA','Paraguay','Australia','Turkey'] },
+  { id:'D', teams:['USA','Paraguay','Australia','Türkiye'] },
   { id:'E', teams:['Germany','Curaçao','Ivory Coast','Ecuador'] },
   { id:'F', teams:['Netherlands','Japan','Sweden','Tunisia'] },
   { id:'G', teams:['Belgium','Egypt','Iran','New Zealand'] },
@@ -893,9 +893,9 @@ const fixtures = [
   { date:'2026-06-12', group:'D', home:'USA',          away:'Paraguay',      score:[4,1] },
   // ── JUNE 13 ──
   { date:'2026-06-13', group:'B', home:'Qatar',        away:'Switzerland',   score:[1,1] },
-  { date:'2026-06-13', group:'C', home:'Brazil',       away:'Morocco',       score:null },
-  { date:'2026-06-13', group:'C', home:'Haiti',        away:'Scotland',      score:null },
-  { date:'2026-06-13', group:'D', home:'Australia',    away:'Turkey',        score:null },
+  { date:'2026-06-13', group:'C', home:'Brazil',       away:'Morocco',       score:[1,1] },
+  { date:'2026-06-13', group:'C', home:'Haiti',        away:'Scotland',      score:[0,1] },
+  { date:'2026-06-13', group:'D', home:'Australia',    away:'Türkiye',        score:null },
   // ── JUNE 14 ──
   { date:'2026-06-14', group:'E', home:'Germany',      away:'Curaçao',       score:null },
   { date:'2026-06-14', group:'F', home:'Netherlands',  away:'Japan',         score:null },
@@ -925,7 +925,7 @@ const fixtures = [
   { date:'2026-06-19', group:'C', home:'Scotland',     away:'Morocco',       score:null },
   { date:'2026-06-19', group:'D', home:'USA',          away:'Australia',     score:null },
   { date:'2026-06-19', group:'C', home:'Brazil',       away:'Haiti',         score:null },
-  { date:'2026-06-19', group:'D', home:'Turkey',       away:'Paraguay',      score:null },
+  { date:'2026-06-19', group:'D', home:'Türkiye',       away:'Paraguay',      score:null },
   // ── JUNE 20 ──
   { date:'2026-06-20', group:'F', home:'Netherlands',  away:'Sweden',        score:null },
   { date:'2026-06-20', group:'E', home:'Germany',      away:'Ivory Coast',   score:null },
@@ -958,7 +958,7 @@ const fixtures = [
   { date:'2026-06-25', group:'E', home:'Curaçao',      away:'Ivory Coast',   score:null },
   { date:'2026-06-25', group:'F', home:'Japan',        away:'Sweden',        score:null },
   { date:'2026-06-25', group:'F', home:'Tunisia',      away:'Netherlands',   score:null },
-  { date:'2026-06-25', group:'D', home:'Turkey',       away:'USA',           score:null },
+  { date:'2026-06-25', group:'D', home:'Türkiye',       away:'USA',           score:null },
   { date:'2026-06-25', group:'D', home:'Paraguay',     away:'Australia',     score:null },
   // ── JUNE 26 ──
   { date:'2026-06-26', group:'I', home:'Norway',       away:'France',        score:null },
@@ -1488,7 +1488,7 @@ const fifaSlugs = {
   'USA':                'usa',
   'Paraguay':           'paraguay',
   'Australia':          'australia',
-  'Turkey':             'turkiye',
+  'Türkiye':             'turkiye',
   'Germany':            'germany',
   'Curaçao':            'curacao',
   'Ivory Coast':        'cote-d-ivoire',
