@@ -1158,6 +1158,17 @@ function showTab(id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   event.target.classList.add('active');
+  if (id === 'fixtures') {
+    setTimeout(() => {
+      const todayGroup = document.querySelector('[data-today="true"]');
+      if (todayGroup) {
+        const headerEl = document.querySelector('header');
+        const headerH = headerEl ? headerEl.offsetHeight : 0;
+        const top = todayGroup.getBoundingClientRect().top + window.scrollY - headerH - 12;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }, 150);
+  }
 }
 
 function renderLivePanel() {
@@ -1467,7 +1478,7 @@ function renderFixtures() {
       </div>`;
     }).join('');
 
-    return `<div class="date-group">
+    return `<div class="date-group" ${isToday ? 'data-today="true"' : ''}>
       <div class="date-header">
         ${label}
         ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
