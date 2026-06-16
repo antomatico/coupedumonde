@@ -794,9 +794,10 @@
     padding: 0;
   }
   .visitors-list {
-    max-height: 55vh;
+    max-height: 272px;
     overflow-y: auto;
     padding: 0.75rem 1.25rem;
+    scroll-behavior: smooth;
   }
   .visitor-entry {
     display: flex;
@@ -1974,7 +1975,8 @@ async function openVisitorsModal() {
   const countEl = document.getElementById('visitors-count');
   listEl.innerHTML = '<div class="visitors-empty">Loading…</div>';
   countEl.textContent = '';
-  const visitors = await loadVisitors();
+  const allVisitors = await loadVisitors();
+  const visitors = allVisitors.slice(0, 5);
   if (!visitors.length) {
     listEl.innerHTML = '<div class="visitors-empty">No visits recorded yet.</div>';
     return;
@@ -1990,7 +1992,8 @@ async function openVisitorsModal() {
       </div>
     </div>`;
   }).join('');
-  countEl.textContent = `${visitors.length} visit${visitors.length !== 1 ? 's' : ''} recorded`;
+  const total = allVisitors.length;
+  countEl.textContent = `Showing 5 most recent · ${total} visit${total !== 1 ? 's' : ''} total`;
 }
 
 function closeVisitorsModal() {
