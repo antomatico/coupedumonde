@@ -1067,6 +1067,21 @@ const groups = [
   { id:'L', teams:['England','Croatia','Ghana','Panama'] },
 ];
 
+// FIFA Rankings (as of June 2026)
+const fifaRank = {
+  'France': 1, 'Spain': 2, 'Argentina': 3, 'England': 4, 'Portugal': 5,
+  'Brazil': 6, 'Netherlands': 7, 'Morocco': 8, 'Belgium': 9, 'Germany': 10,
+  'Croatia': 11, 'Colombia': 13, 'Senegal': 14, 'Mexico': 15, 'USA': 16,
+  'Uruguay': 17, 'Japan': 18, 'Switzerland': 19, 'Iran': 21, 'Türkiye': 22,
+  'Ecuador': 23, 'Austria': 24, 'South Korea': 25, 'Australia': 27,
+  'Algeria': 28, 'Egypt': 29, 'Canada': 30, 'Norway': 31, 'Panama': 33,
+  'Ivory Coast': 34, 'Sweden': 38, 'Paraguay': 40, 'Czechia': 41,
+  'Scotland': 43, 'Tunisia': 44, 'Congo DR': 46, 'Uzbekistan': 50,
+  'Qatar': 55, 'Iraq': 57, 'South Africa': 60, 'Saudi Arabia': 61,
+  'Jordan': 63, 'Bosnia-Herzegovina': 65, 'Cape Verde': 69, 'Ghana': 74,
+  'Curaçao': 82, 'Haiti': 83, 'New Zealand': 85,
+};
+
 // score: [homeGoals, awayGoals] or null if not yet played
 // UPDATE THIS SECTION DAILY
 const fixtures = [
@@ -1557,12 +1572,14 @@ function renderFixtures() {
           <div class="team-name">
             <span>${flags[f.home]||'🏳️'}</span>
             <span style="color:${hCol}">${f.home}</span>
+            ${fifaRank[f.home] ? `<span style="font-size:0.65rem;opacity:0.55">#${fifaRank[f.home]}</span>` : ''}
             <span style="font-size:0.65rem;opacity:0.7">(${hOwner||'?'})</span>
           </div>
           ${scoreHtml}
           <div class="team-name">
             <span>${flags[f.away]||'🏳️'}</span>
             <span style="color:${aCol}">${f.away}</span>
+            ${fifaRank[f.away] ? `<span style="font-size:0.65rem;opacity:0.55">#${fifaRank[f.away]}</span>` : ''}
             <span style="font-size:0.65rem;opacity:0.7">(${aOwner||'?'})</span>
           </div>
         </div>
