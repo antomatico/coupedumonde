@@ -743,6 +743,87 @@
   .score-display.live {
     color: #ef4444;
   }
+
+  /* WHO'S VIEWED MODAL */
+  .whos-viewed-link {
+    display: block;
+    text-align: center;
+    margin: 1.25rem auto 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .whos-viewed-link:hover { opacity: 1; }
+  #visitors-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    width: min(380px, 92vw);
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  }
+  .visitors-header {
+    padding: 1.25rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .visitors-header h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  .visitors-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+  }
+  .visitors-list {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding: 0.75rem 1.25rem;
+  }
+  .visitor-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .visitor-entry:last-child { border-bottom: none; }
+  .visitor-flag { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+  .visitor-info { flex: 1; }
+  .visitor-location { font-weight: 700; }
+  .visitor-time { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+  .visitors-empty {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 2rem 0;
+  }
+  .visitors-count {
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0.5rem 1.25rem 0.75rem;
+    border-top: 1px solid var(--border);
+    text-align: right;
+  }
   #refresh-status {
     font-size: 0.7rem;
     color: var(--muted);
@@ -889,7 +970,19 @@
     </div>
   </div>
   <div id="teams-table-container"></div>
+  <span class="whos-viewed-link" onclick="openVisitorsModal()">👀 Who's viewed?</span>
 </section>
+
+<!-- VISITORS MODAL -->
+<div id="visitors-modal-backdrop" onclick="closeVisitorsModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;backdrop-filter:blur(4px);"></div>
+<div id="visitors-modal">
+  <div class="visitors-header">
+    <h3>👀 Who's viewed?</h3>
+    <button class="visitors-close" onclick="closeVisitorsModal()">×</button>
+  </div>
+  <div class="visitors-list" id="visitors-list"></div>
+  <div class="visitors-count" id="visitors-count"></div>
+</div>
 
 <!-- ===== GROUPS TAB ===== -->
 <section class="tab-section" id="tab-groups">
@@ -1816,6 +1909,96 @@ async function scheduleRefresh() {
 }
 
 // ============================================================
+// VISITOR TRACKING
+// ============================================================
+// To enable cross-device tracking, create a free Firebase Realtime Database
+// and paste its URL below (e.g. https://your-project-rtdb.firebaseio.com/visitors)
+// Leave empty to use localStorage (single-device only)
+const VISITOR_DB_URL = '';
+
+function codeToFlag(code) {
+  if (!code || code.length !== 2) return '🌍';
+  return [...code.toUpperCase()].map(c => String.fromCodePoint(c.charCodeAt(0) + 127397)).join('');
+}
+
+function timeAgo(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return days === 1 ? 'yesterday' : `${days} days ago`;
+}
+
+async function trackVisit() {
+  try {
+    const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
+    const visitor = {
+      time: new Date().toISOString(),
+      city: geo.city || '',
+      country: geo.country_name || 'Unknown',
+      country_code: geo.country_code || '',
+    };
+    if (VISITOR_DB_URL) {
+      await fetch(VISITOR_DB_URL + '.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(visitor),
+      });
+    } else {
+      const visits = JSON.parse(localStorage.getItem('wcdm_visits') || '[]');
+      visits.push(visitor);
+      localStorage.setItem('wcdm_visits', JSON.stringify(visits));
+    }
+  } catch(e) { /* silent fail */ }
+}
+
+async function loadVisitors() {
+  if (VISITOR_DB_URL) {
+    try {
+      const data = await fetch(VISITOR_DB_URL + '.json').then(r => r.json());
+      return data ? Object.values(data).sort((a,b) => b.time.localeCompare(a.time)) : [];
+    } catch(e) { return []; }
+  } else {
+    const visits = JSON.parse(localStorage.getItem('wcdm_visits') || '[]');
+    return visits.slice().reverse();
+  }
+}
+
+async function openVisitorsModal() {
+  document.getElementById('visitors-modal-backdrop').style.display = 'block';
+  document.getElementById('visitors-modal').style.display = 'block';
+  const listEl = document.getElementById('visitors-list');
+  const countEl = document.getElementById('visitors-count');
+  listEl.innerHTML = '<div class="visitors-empty">Loading…</div>';
+  countEl.textContent = '';
+  const visitors = await loadVisitors();
+  if (!visitors.length) {
+    listEl.innerHTML = '<div class="visitors-empty">No visits recorded yet.</div>';
+    return;
+  }
+  listEl.innerHTML = visitors.map(v => {
+    const flag = codeToFlag(v.country_code);
+    const location = [v.city, v.country].filter(Boolean).join(', ');
+    return `<div class="visitor-entry">
+      <div class="visitor-flag">${flag}</div>
+      <div class="visitor-info">
+        <div class="visitor-location">${location}</div>
+        <div class="visitor-time">${timeAgo(v.time)}</div>
+      </div>
+    </div>`;
+  }).join('');
+  countEl.textContent = `${visitors.length} visit${visitors.length !== 1 ? 's' : ''} recorded`;
+}
+
+function closeVisitorsModal() {
+  document.getElementById('visitors-modal-backdrop').style.display = 'none';
+  document.getElementById('visitors-modal').style.display = 'none';
+}
+
+// ============================================================
 // INIT
 // ============================================================
 
@@ -1834,6 +2017,9 @@ async function scheduleRefresh() {
 
 // Then kick off live polling
 scheduleRefresh();
+
+// Track this visit
+trackVisit();
 </script>
 </body>
 </html>
