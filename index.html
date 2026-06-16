@@ -981,6 +981,10 @@
     <h3>👀 Who's viewed?</h3>
     <button class="visitors-close" onclick="closeVisitorsModal()">×</button>
   </div>
+  <div id="your-location-bar" style="display:none;padding:0.6rem 1.25rem;background:rgba(251,191,36,0.08);border-bottom:1px solid var(--border);font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;">
+    <span id="your-location-flag" style="font-size:1.4rem;line-height:1"></span>
+    <span id="your-location-text"></span>
+  </div>
   <div class="visitors-list" id="visitors-list"></div>
   <div class="visitors-count" id="visitors-count"></div>
 </div>
@@ -1933,15 +1937,27 @@ function timeAgo(iso) {
   return days === 1 ? 'yesterday' : `${days} days ago`;
 }
 
-async function trackVisit() {
+async function detectLocation() {
+  // Try ipapi.co first, fall back to ip-api.com
   try {
     const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
-    const visitor = {
-      time: new Date().toISOString(),
-      city: geo.city || '',
-      country: geo.country_name || 'Unknown',
-      country_code: geo.country_code || '',
-    };
+    if (geo && geo.country_code && geo.country_code !== 'undefined') {
+      return { city: geo.city || '', country: geo.country_name || 'Unknown', country_code: geo.country_code };
+    }
+  } catch(e) {}
+  try {
+    const geo = await fetch('https://ip-api.com/json/?fields=country,countryCode,city').then(r => r.json());
+    if (geo && geo.countryCode) {
+      return { city: geo.city || '', country: geo.country || 'Unknown', country_code: geo.countryCode };
+    }
+  } catch(e) {}
+  return { city: '', country: 'Unknown', country_code: '' };
+}
+
+async function trackVisit() {
+  try {
+    const loc = await detectLocation();
+    const visitor = { time: new Date().toISOString(), ...loc };
     if (VISITOR_DB_URL) {
       await fetch(VISITOR_DB_URL + '.json', {
         method: 'POST',
@@ -1953,7 +1969,7 @@ async function trackVisit() {
       visits.push(visitor);
       localStorage.setItem('wcdm_visits', JSON.stringify(visits));
     }
-  } catch(e) { /* silent fail */ }
+  } catch(e) {}
 }
 
 async function loadVisitors() {
@@ -1973,8 +1989,19 @@ async function openVisitorsModal() {
   document.getElementById('visitors-modal').style.display = 'block';
   const listEl = document.getElementById('visitors-list');
   const countEl = document.getElementById('visitors-count');
+  const locBar = document.getElementById('your-location-bar');
   listEl.innerHTML = '<div class="visitors-empty">Loading…</div>';
   countEl.textContent = '';
+
+  // Detect current viewer's location and show it
+  detectLocation().then(loc => {
+    const flag = codeToFlag(loc.country_code);
+    const place = [loc.city, loc.country].filter(Boolean).join(', ');
+    document.getElementById('your-location-flag').textContent = flag;
+    document.getElementById('your-location-text').textContent = `You're viewing from ${place}`;
+    locBar.style.display = 'flex';
+  });
+
   const allVisitors = await loadVisitors();
   const visitors = allVisitors.slice(0, 5);
   if (!visitors.length) {
@@ -1999,6 +2026,7 @@ async function openVisitorsModal() {
 function closeVisitorsModal() {
   document.getElementById('visitors-modal-backdrop').style.display = 'none';
   document.getElementById('visitors-modal').style.display = 'none';
+  document.getElementById('your-location-bar').style.display = 'none';
 }
 
 // ============================================================
