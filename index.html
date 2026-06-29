@@ -1521,7 +1521,7 @@ function renderLeaderboard(playerTotals) {
     if (i > 0 && playerTotals[i].total < playerTotals[i-1].total) tableRank = i + 1;
     const displayRank = tableRank;
     const col = players[p.name].color;
-    const alive = Object.entries(teamOwner).filter(([t,o]) => o===p.name).length;
+    const alive = p.teamsAlive;
     return `<tr>
       <td><span class="rank-badge" style="background:${players[p.name].bg};color:${col}">${displayRank}</span></td>
       <td class="player-name-cell" style="color:${col}">
