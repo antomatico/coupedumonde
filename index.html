@@ -1210,8 +1210,8 @@ const fixtures = [
 
   // ── ROUND OF 32 ──
   { date:'2026-06-28', group:'R32', home:'South Africa', away:'Canada',             score:[0,1],  kickoff:'2026-06-28T19:00Z', tz:'America/Los_Angeles' },
-  { date:'2026-06-29', group:'R32', home:'Brazil',       away:'Japan',              score:null,   kickoff:'2026-06-29T17:00Z', tz:'America/Chicago' },
-  { date:'2026-06-29', group:'R32', home:'Germany',      away:'Paraguay',           score:null,   kickoff:'2026-06-29T20:30Z', tz:'America/New_York' },
+  { date:'2026-06-29', group:'R32', home:'Brazil',       away:'Japan',              score:[2,1],    kickoff:'2026-06-29T17:00Z', tz:'America/Chicago' },
+  { date:'2026-06-29', group:'R32', home:'Germany',      away:'Paraguay',           score:[1,1],  penalties:'3-4', kickoff:'2026-06-29T20:30Z', tz:'America/New_York' },
   { date:'2026-06-29', group:'R32', home:'Netherlands',  away:'Morocco',            score:null,   kickoff:'2026-06-30T01:00Z', tz:'America/Chicago' },
   { date:'2026-06-30', group:'R32', home:'Ivory Coast',  away:'Norway',             score:null,   kickoff:'2026-06-30T17:00Z', tz:'America/Chicago' },
   { date:'2026-06-30', group:'R32', home:'France',       away:'Sweden',             score:null,   kickoff:'2026-06-30T21:00Z', tz:'America/New_York' },
@@ -1234,8 +1234,8 @@ const knockout = {
     // June 28 — played
     { home:'South Africa', away:'Canada',             homeScore:0, awayScore:1 },
     // June 29
-    { home:'Brazil',       away:'Japan',              homeScore:null, awayScore:null },
-    { home:'Germany',      away:'Paraguay',           homeScore:null, awayScore:null },
+    { home:'Brazil',       away:'Japan',              homeScore:2, awayScore:1 },
+    { home:'Germany',      away:'Paraguay',           homeScore:1, awayScore:1, penalties:'3-4' },
     { home:'Netherlands',  away:'Morocco',            homeScore:null, awayScore:null },
     // June 30
     { home:'Ivory Coast',  away:'Norway',             homeScore:null, awayScore:null },
@@ -1746,14 +1746,18 @@ function renderBracket() {
 
   function matchHtml(m) {
     if (!m) return '';
-    const hWon = m.homeScore !== null && m.homeScore > m.awayScore;
-    const aWon = m.awayScore !== null && m.awayScore > m.homeScore;
+    const penHome = m.penalties ? parseInt(m.penalties.split('-')[0]) : null;
+    const penAway = m.penalties ? parseInt(m.penalties.split('-')[1]) : null;
+    const tied = m.homeScore !== null && m.homeScore === m.awayScore;
+    const hWon = m.homeScore !== null && (m.homeScore > m.awayScore || (tied && penHome !== null && penHome > penAway));
+    const aWon = m.awayScore !== null && (m.awayScore > m.homeScore || (tied && penAway !== null && penAway > penHome));
     const hOwner = teamOwner[m.home];
     const aOwner = teamOwner[m.away];
     const hCol = hOwner ? players[hOwner].color : 'var(--muted)';
     const aCol = aOwner ? players[aOwner].color : 'var(--muted)';
     const hOwnerTag = hOwner ? `<span class="bracket-owner" style="color:${players[hOwner].color};opacity:0.75">(${hOwner})</span>` : '';
     const aOwnerTag = aOwner ? `<span class="bracket-owner" style="color:${players[aOwner].color};opacity:0.75">(${aOwner})</span>` : '';
+    const penTag = m.penalties ? `<div style="font-size:0.58rem;color:var(--gold);text-align:center;padding:1px 4px;letter-spacing:0.03em">(pens ${m.penalties})</div>` : '';
     return `<div class="bracket-match ${(hWon||aWon)?'winner-match':''}">
       <div class="bracket-team ${hWon?'won':''}">
         <span class="bracket-team-name ${m.home==='TBD'?'tbd':''}" style="color:${m.home==='TBD'?'var(--muted)':hCol}">
@@ -1761,6 +1765,7 @@ function renderBracket() {
         </span>${hOwnerTag}
         <span class="bracket-score">${m.homeScore??''}</span>
       </div>
+      ${penTag}
       <div class="bracket-team ${aWon?'won':''}">
         <span class="bracket-team-name ${m.away==='TBD'?'tbd':''}" style="color:${m.away==='TBD'?'var(--muted)':aCol}">
           ${m.away==='TBD'?'TBC':`${flags[m.away]||''} ${m.away}`}
