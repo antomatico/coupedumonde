@@ -874,34 +874,22 @@
     white-space: nowrap;
   }
 
-  /* PAGE COUNTER */
-  #page-counter {
-    position: fixed;
-    top: 12px;
-    left: 14px;
-    z-index: 9999;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    color: #39ff14;
-    text-shadow: 0 0 6px #39ff14, 0 0 12px #39ff14;
-    letter-spacing: 0.05em;
-    pointer-events: none;
-    user-select: none;
+  /* FOOTER META (Who's viewed / Page views) */
+  .footer-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 1.25rem auto 0;
+  }
+  .footer-meta .whos-viewed-link {
+    display: inline-block;
+    margin: 0;
   }
 </style>
 </head>
 <body>
-<div id="page-counter">Page views = 0,000</div>
-
-<script>
-  (function() {
-    var key = 'whanau_pageviews';
-    var count = Math.min(parseInt(localStorage.getItem(key) || '0', 10) + 1, 999);
-    localStorage.setItem(key, count);
-    var formatted = count.toLocaleString('en-US', { minimumIntegerDigits: 1 });
-    document.getElementById('page-counter').textContent = 'Page views = ' + formatted;
-  })();
-</script>
 
 <header>
   <h1>⚽ Jackson whānau Coupe du Monde 2026</h1>
@@ -1009,7 +997,10 @@
     </div>
   </div>
   <div id="teams-table-container"></div>
-  <span class="whos-viewed-link" onclick="openVisitorsModal()">👀 Who's viewed?</span>
+  <div class="footer-meta">
+    <span class="whos-viewed-link" onclick="openVisitorsModal()">👀 Who's viewed?</span>
+    <span class="whos-viewed-link" id="page-counter">📊 Loading views…</span>
+  </div>
 </section>
 
 <!-- VISITORS MODAL -->
@@ -1039,7 +1030,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Group stage complete — Round of 32 underway! Canada have advanced, 15 matches to go. Teams shown as TBC until decided.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 32 underway — 11 of 16 matches played, 5 to go. Teams shown as TBC until decided.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1222,9 +1213,9 @@ const fixtures = [
   { date:'2026-06-30', group:'R32', home:'France',       away:'Sweden',             score:[3,0],   kickoff:'2026-06-30T21:00Z', tz:'America/New_York' },
   { date:'2026-06-30', group:'R32', home:'Mexico',       away:'Ecuador',            score:[2,0],   kickoff:'2026-07-01T01:00Z', tz:'America/Mexico_City' },
   { date:'2026-07-01', group:'R32', home:'England',      away:'Congo DR',           score:[2,1],   kickoff:'2026-07-01T16:00Z', tz:'America/New_York' },
-  { date:'2026-07-01', group:'R32', home:'Belgium',      away:'Senegal',            score:null,   kickoff:'2026-07-01T20:00Z', tz:'America/Los_Angeles' },
-  { date:'2026-07-01', group:'R32', home:'USA',          away:'Bosnia-Herzegovina', score:null,   kickoff:'2026-07-02T00:00Z', tz:'America/Los_Angeles' },
-  { date:'2026-07-02', group:'R32', home:'Spain',        away:'Austria',            score:null,   kickoff:'2026-07-02T19:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-01', group:'R32', home:'Belgium',      away:'Senegal',            score:[3,2],   kickoff:'2026-07-01T20:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-01', group:'R32', home:'USA',          away:'Bosnia-Herzegovina', score:[2,0],   kickoff:'2026-07-02T00:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-02', group:'R32', home:'Spain',        away:'Austria',            score:[3,0],   kickoff:'2026-07-02T19:00Z', tz:'America/Los_Angeles' },
   { date:'2026-07-02', group:'R32', home:'Portugal',     away:'Croatia',            score:null,   kickoff:'2026-07-02T23:00Z', tz:'America/Toronto' },
   { date:'2026-07-02', group:'R32', home:'Switzerland',  away:'Algeria',            score:null,   kickoff:'2026-07-03T03:00Z', tz:'America/Vancouver' },
   { date:'2026-07-03', group:'R32', home:'Australia',    away:'Egypt',              score:null,   kickoff:'2026-07-03T18:00Z', tz:'America/Chicago' },
@@ -1248,10 +1239,10 @@ const knockout = {
     { home:'Mexico',       away:'Ecuador',            homeScore:2, awayScore:0 },
     // July 1
     { home:'England',      away:'Congo DR',           homeScore:2, awayScore:1 },
-    { home:'Belgium',      away:'Senegal',            homeScore:null, awayScore:null },
-    { home:'USA',          away:'Bosnia-Herzegovina', homeScore:null, awayScore:null },
+    { home:'Belgium',      away:'Senegal',            homeScore:3, awayScore:2 },
+    { home:'USA',          away:'Bosnia-Herzegovina', homeScore:2, awayScore:0 },
     // July 2
-    { home:'Spain',        away:'Austria',            homeScore:null, awayScore:null },
+    { home:'Spain',        away:'Austria',            homeScore:3, awayScore:0 },
     { home:'Portugal',     away:'Croatia',            homeScore:null, awayScore:null },
     { home:'Switzerland',  away:'Algeria',            homeScore:null, awayScore:null },
     // July 3
@@ -1264,7 +1255,7 @@ const knockout = {
     { home:'Brazil',   away:'Norway',   homeScore:null, awayScore:null },
     { home:'Paraguay', away:'France',   homeScore:null, awayScore:null },
     { home:'Mexico',   away:'England',  homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'Belgium', away:'USA', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
@@ -2224,6 +2215,27 @@ function closeVisitorsModal() {
 }
 
 // ============================================================
+// PAGE VIEW COUNTER (shared across every visitor/device)
+// ============================================================
+// Uses CountAPI (countapi.mileshilliard.com) — a free, no-signup counting
+// service. Every page load increments one shared key, so this is a true
+// tally of all visits, not just this browser's.
+const PAGE_COUNTER_KEY = 'jackson_whanau_coupe_du_monde_2026_pageviews';
+
+async function loadPageViews() {
+  const el = document.getElementById('page-counter');
+  if (!el) return;
+  try {
+    const res = await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${PAGE_COUNTER_KEY}`);
+    const data = await res.json();
+    const count = parseInt(data.value, 10);
+    el.textContent = `📊 ${count.toLocaleString('en-US')} page views`;
+  } catch (e) {
+    el.textContent = '📊 Page views unavailable';
+  }
+}
+
+// ============================================================
 // INIT
 // ============================================================
 
@@ -2245,6 +2257,9 @@ scheduleRefresh();
 
 // Track this visit
 trackVisit();
+
+// Load the shared page-view tally
+loadPageViews();
 </script>
 </body>
 </html>
