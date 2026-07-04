@@ -1030,7 +1030,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 32 underway — 11 of 16 matches played, 5 to go. Teams shown as TBC until decided.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 32 complete! Round of 16 matchups are set — next up.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1216,11 +1216,11 @@ const fixtures = [
   { date:'2026-07-01', group:'R32', home:'Belgium',      away:'Senegal',            score:[3,2],   kickoff:'2026-07-01T20:00Z', tz:'America/Los_Angeles' },
   { date:'2026-07-01', group:'R32', home:'USA',          away:'Bosnia-Herzegovina', score:[2,0],   kickoff:'2026-07-02T00:00Z', tz:'America/Los_Angeles' },
   { date:'2026-07-02', group:'R32', home:'Spain',        away:'Austria',            score:[3,0],   kickoff:'2026-07-02T19:00Z', tz:'America/Los_Angeles' },
-  { date:'2026-07-02', group:'R32', home:'Portugal',     away:'Croatia',            score:null,   kickoff:'2026-07-02T23:00Z', tz:'America/Toronto' },
-  { date:'2026-07-02', group:'R32', home:'Switzerland',  away:'Algeria',            score:null,   kickoff:'2026-07-03T03:00Z', tz:'America/Vancouver' },
-  { date:'2026-07-03', group:'R32', home:'Australia',    away:'Egypt',              score:null,   kickoff:'2026-07-03T18:00Z', tz:'America/Chicago' },
-  { date:'2026-07-03', group:'R32', home:'Argentina',    away:'Cape Verde',         score:null,   kickoff:'2026-07-03T22:00Z', tz:'America/New_York' },
-  { date:'2026-07-03', group:'R32', home:'Colombia',     away:'Ghana',              score:null,   kickoff:'2026-07-04T01:30Z', tz:'America/Chicago' },
+  { date:'2026-07-02', group:'R32', home:'Portugal',     away:'Croatia',            score:[2,1],   kickoff:'2026-07-02T23:00Z', tz:'America/Toronto' },
+  { date:'2026-07-02', group:'R32', home:'Switzerland',  away:'Algeria',            score:[2,0],   kickoff:'2026-07-03T03:00Z', tz:'America/Vancouver' },
+  { date:'2026-07-03', group:'R32', home:'Australia',    away:'Egypt',              score:[1,1],  penalties:'2-4', kickoff:'2026-07-03T18:00Z', tz:'America/Chicago' },
+  { date:'2026-07-03', group:'R32', home:'Argentina',    away:'Cape Verde',         score:[3,2],   kickoff:'2026-07-03T22:00Z', tz:'America/New_York' },
+  { date:'2026-07-03', group:'R32', home:'Colombia',     away:'Ghana',              score:[1,0],   kickoff:'2026-07-04T01:30Z', tz:'America/Chicago' },
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1243,12 +1243,12 @@ const knockout = {
     { home:'USA',          away:'Bosnia-Herzegovina', homeScore:2, awayScore:0 },
     // July 2
     { home:'Spain',        away:'Austria',            homeScore:3, awayScore:0 },
-    { home:'Portugal',     away:'Croatia',            homeScore:null, awayScore:null },
-    { home:'Switzerland',  away:'Algeria',            homeScore:null, awayScore:null },
+    { home:'Portugal',     away:'Croatia',            homeScore:2, awayScore:1 },
+    { home:'Switzerland',  away:'Algeria',            homeScore:2, awayScore:0 },
     // July 3
-    { home:'Australia',    away:'Egypt',              homeScore:null, awayScore:null },
-    { home:'Argentina',    away:'Cape Verde',         homeScore:null, awayScore:null },
-    { home:'Colombia',     away:'Ghana',              homeScore:null, awayScore:null },
+    { home:'Australia',    away:'Egypt',              homeScore:1, awayScore:1, penalties:'2-4' },
+    { home:'Argentina',    away:'Cape Verde',         homeScore:3, awayScore:2 },
+    { home:'Colombia',     away:'Ghana',              homeScore:1, awayScore:0 },
   ],
   r16: [
     { home:'Canada',   away:'Morocco',  homeScore:null, awayScore:null },
@@ -1256,9 +1256,9 @@ const knockout = {
     { home:'Paraguay', away:'France',   homeScore:null, awayScore:null },
     { home:'Mexico',   away:'England',  homeScore:null, awayScore:null },
     { home:'Belgium', away:'USA', homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'Portugal', away:'Spain', homeScore:null, awayScore:null },
+    { home:'Switzerland', away:'Colombia', homeScore:null, awayScore:null },
+    { home:'Argentina', away:'Egypt', homeScore:null, awayScore:null },
   ],
   qf: Array(4).fill(null).map((_,i) => ({
     home:'TBD', away:'TBD', homeScore:null, awayScore:null
