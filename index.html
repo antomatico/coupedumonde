@@ -1030,7 +1030,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 underway — Morocco (3-0 v Canada) and France (1-0 v Paraguay) through to the quarter-finals. 6 more Round of 16 matches to come July 5-7.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 underway — Morocco, France and Norway through to the quarter-finals. 5 more Round of 16 matches to come July 5-7.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1224,7 +1224,7 @@ const fixtures = [
   // ── ROUND OF 16 ──
   { date:'2026-07-04', group:'R16', home:'Canada',       away:'Morocco',     score:[0,3],  kickoff:'2026-07-04T17:00Z', tz:'America/Chicago' },
   { date:'2026-07-04', group:'R16', home:'Paraguay',     away:'France',      score:[0,1],  kickoff:'2026-07-04T21:00Z', tz:'America/New_York' },
-  { date:'2026-07-05', group:'R16', home:'Brazil',       away:'Norway',      score:null,   kickoff:'2026-07-05T20:00Z', tz:'America/New_York' },
+  { date:'2026-07-05', group:'R16', home:'Brazil',       away:'Norway',      score:[1,2],  kickoff:'2026-07-05T20:00Z', tz:'America/New_York' },
   { date:'2026-07-05', group:'R16', home:'Mexico',       away:'England',     score:null,   kickoff:'2026-07-06T00:00Z', tz:'America/Mexico_City' },
   { date:'2026-07-06', group:'R16', home:'Belgium',      away:'USA',         score:null,   kickoff:'2026-07-06T21:00Z', tz:'America/Los_Angeles' },
   { date:'2026-07-06', group:'R16', home:'Portugal',     away:'Spain',       score:null,   kickoff:'2026-07-06T19:00Z', tz:'America/Chicago' },
@@ -1261,7 +1261,7 @@ const knockout = {
   ],
   r16: [
     { home:'Canada',   away:'Morocco',  homeScore:0, awayScore:3 },
-    { home:'Brazil',   away:'Norway',   homeScore:null, awayScore:null },
+    { home:'Brazil',   away:'Norway',   homeScore:1, awayScore:2 },
     { home:'Paraguay', away:'France',   homeScore:0, awayScore:1 },
     { home:'Mexico',   away:'England',  homeScore:null, awayScore:null },
     { home:'Belgium', away:'USA', homeScore:null, awayScore:null },
@@ -1271,7 +1271,7 @@ const knockout = {
   ],
   qf: [
     { home:'Morocco', away:'France', homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'Norway', away:'TBD', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
   ],
