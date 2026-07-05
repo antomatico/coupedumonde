@@ -896,10 +896,10 @@
   <p class="updated" id="updated-label">Fetching live scores…</p>
   <p id="refresh-status"></p>
   <nav>
-    <button class="tab-btn active" onclick="showTab('leaderboard')">🏆 Leaderboard</button>
-    <button class="tab-btn" onclick="showTab('groups')">⚽ Groups</button>
-    <button class="tab-btn" onclick="showTab('fixtures')">📅 Fixtures</button>
-    <button class="tab-btn" onclick="showTab('knockout')">🥊 Knockout</button>
+    <button class="tab-btn active" onclick="showTab('leaderboard', this)">🏆 Leaderboard</button>
+    <button class="tab-btn" onclick="showTab('groups', this)">⚽ Groups</button>
+    <button class="tab-btn" onclick="showTab('fixtures', this)">📅 Fixtures</button>
+    <button class="tab-btn" onclick="showTab('knockout', this)">🥊 Knockout</button>
   </nav>
 </header>
 
@@ -1030,7 +1030,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 32 complete! Round of 16 matchups are set — next up.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 underway — Morocco (3-0 v Canada) and France (1-0 v Paraguay) through to the quarter-finals. 6 more Round of 16 matches to come July 5-7.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1221,6 +1221,15 @@ const fixtures = [
   { date:'2026-07-03', group:'R32', home:'Australia',    away:'Egypt',              score:[1,1],  penalties:'2-4', kickoff:'2026-07-03T18:00Z', tz:'America/Chicago' },
   { date:'2026-07-03', group:'R32', home:'Argentina',    away:'Cape Verde',         score:[3,2],   kickoff:'2026-07-03T22:00Z', tz:'America/New_York' },
   { date:'2026-07-03', group:'R32', home:'Colombia',     away:'Ghana',              score:[1,0],   kickoff:'2026-07-04T01:30Z', tz:'America/Chicago' },
+  // ── ROUND OF 16 ──
+  { date:'2026-07-04', group:'R16', home:'Canada',       away:'Morocco',     score:[0,3],  kickoff:'2026-07-04T17:00Z', tz:'America/Chicago' },
+  { date:'2026-07-04', group:'R16', home:'Paraguay',     away:'France',      score:[0,1],  kickoff:'2026-07-04T21:00Z', tz:'America/New_York' },
+  { date:'2026-07-05', group:'R16', home:'Brazil',       away:'Norway',      score:null,   kickoff:'2026-07-05T20:00Z', tz:'America/New_York' },
+  { date:'2026-07-05', group:'R16', home:'Mexico',       away:'England',     score:null,   kickoff:'2026-07-06T00:00Z', tz:'America/Mexico_City' },
+  { date:'2026-07-06', group:'R16', home:'Belgium',      away:'USA',         score:null,   kickoff:'2026-07-06T21:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-06', group:'R16', home:'Portugal',     away:'Spain',       score:null,   kickoff:'2026-07-06T19:00Z', tz:'America/Chicago' },
+  { date:'2026-07-07', group:'R16', home:'Switzerland',  away:'Colombia',    score:null,   kickoff:'2026-07-07T20:00Z', tz:'America/Vancouver' },
+  { date:'2026-07-07', group:'R16', home:'Argentina',    away:'Egypt',       score:null,   kickoff:'2026-07-07T16:00Z', tz:'America/New_York' },
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1251,18 +1260,21 @@ const knockout = {
     { home:'Colombia',     away:'Ghana',              homeScore:1, awayScore:0 },
   ],
   r16: [
-    { home:'Canada',   away:'Morocco',  homeScore:null, awayScore:null },
+    { home:'Canada',   away:'Morocco',  homeScore:0, awayScore:3 },
     { home:'Brazil',   away:'Norway',   homeScore:null, awayScore:null },
-    { home:'Paraguay', away:'France',   homeScore:null, awayScore:null },
+    { home:'Paraguay', away:'France',   homeScore:0, awayScore:1 },
     { home:'Mexico',   away:'England',  homeScore:null, awayScore:null },
     { home:'Belgium', away:'USA', homeScore:null, awayScore:null },
     { home:'Portugal', away:'Spain', homeScore:null, awayScore:null },
     { home:'Switzerland', away:'Colombia', homeScore:null, awayScore:null },
     { home:'Argentina', away:'Egypt', homeScore:null, awayScore:null },
   ],
-  qf: Array(4).fill(null).map((_,i) => ({
-    home:'TBD', away:'TBD', homeScore:null, awayScore:null
-  })),
+  qf: [
+    { home:'Morocco', away:'France', homeScore:null, awayScore:null },
+    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+  ],
   sf: Array(2).fill(null).map((_,i) => ({
     home:'TBD', away:'TBD', homeScore:null, awayScore:null
   })),
@@ -1427,21 +1439,27 @@ function ownerTag(team) {
   return `<span class="owner-tag" style="background:${p.bg};color:${p.color}">${owner}</span>`;
 }
 
-function showTab(id) {
+function scrollToCurrentFixtures() {
+  const panel = document.getElementById('tab-fixtures');
+  if (!panel || !panel.classList.contains('active')) return;
+  setTimeout(() => {
+    const anchor = document.querySelector('[data-current-fixture="true"]') || document.querySelector('[data-today="true"]');
+    if (anchor) {
+      const headerEl = document.querySelector('header');
+      const headerH = headerEl ? headerEl.offsetHeight : 0;
+      const top = anchor.getBoundingClientRect().top + window.scrollY - headerH - 12;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }, 150);
+}
+
+function showTab(id, btnEl) {
   document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
+  (btnEl || (typeof event !== 'undefined' ? event.target : null))?.classList.add('active');
   if (id === 'fixtures') {
-    setTimeout(() => {
-      const todayGroup = document.querySelector('[data-today="true"]');
-      if (todayGroup) {
-        const headerEl = document.querySelector('header');
-        const headerH = headerEl ? headerEl.offsetHeight : 0;
-        const top = todayGroup.getBoundingClientRect().top + window.scrollY - headerH - 12;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    }, 150);
+    scrollToCurrentFixtures();
   }
 }
 
@@ -1688,9 +1706,19 @@ function renderFixtures() {
   const el = document.getElementById('fixtures-container');
   const dates = Object.keys(byDate).sort();
 
+  // Anchor day for the auto-scroll: today if there are games on, otherwise
+  // the most recent day that's already happened, otherwise the next upcoming day
+  let anchorDate = dates.includes(today) ? today : null;
+  if (!anchorDate) {
+    const past = dates.filter(d => d < today).sort();
+    const future = dates.filter(d => d > today).sort();
+    anchorDate = past.length ? past[past.length - 1] : (future.length ? future[0] : null);
+  }
+
   el.innerHTML = dates.map(date => {
     const matches = byDate[date];
     const isToday = date === today;
+    const isAnchor = date === anchorDate;
     const d = new Date(date + 'T12:00:00');
     const label = d.toLocaleDateString('en-NZ', { weekday:'long', day:'numeric', month:'long' });
 
@@ -1726,7 +1754,7 @@ function renderFixtures() {
       const aCol = aOwner ? players[aOwner].color : 'var(--text)';
       const times = f.kickoff ? formatKickoff(f.kickoff, f.tz) : null;
 
-      return `<div class="fixture ${isClash?'family-clash':''} ${played?'played':''} ${isToday?'today-fixture':''}">
+      return `<div class="fixture ${isClash?'family-clash':''} ${played?'played':''} ${(isToday||isAnchor)?'today-fixture':''}">
         <span class="group-badge">Grp ${f.group}</span>
         ${isClash ? '<span class="clash-icon">⚔️</span>' : ''}
         <div class="fixture-teams">
@@ -1754,10 +1782,10 @@ function renderFixtures() {
       </div>`;
     }).join('');
 
-    return `<div class="date-group" ${isToday ? 'data-today="true"' : ''}>
+    return `<div class="date-group" ${isToday ? 'data-today="true"' : ''} ${isAnchor ? 'data-current-fixture="true"' : ''}>
       <div class="date-header">
         ${label}
-        ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
+        ${isToday ? '<span class="today-badge">TODAY</span>' : (isAnchor ? '<span class="today-badge">MOST RECENT</span>' : '')}
       </div>
       <div class="fixture-list">${matchHtml}</div>
     </div>`;
@@ -2250,6 +2278,7 @@ async function loadPageViews() {
   renderGroups(standings);
   renderFixtures();
   renderBracket();
+  scrollToCurrentFixtures(); // no-op unless Fixtures happens to be the active tab
 })();
 
 // Then kick off live polling
