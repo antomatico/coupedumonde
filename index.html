@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="⚽ Jackson whānau Coupe du Monde 2026">
 <title>⚽ Jackson whānau Coupe du Monde 2026</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <style>
   :root {
     --papa: #84cc16;
@@ -1030,7 +1032,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 underway — Morocco, France, Norway and England through to the quarter-finals. 4 more Round of 16 matches to come July 6-7.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 underway — Morocco, France, Norway, England, Belgium and Spain through to the quarter-finals. 2 more Round of 16 matches to come July 7.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1226,8 +1228,8 @@ const fixtures = [
   { date:'2026-07-04', group:'R16', home:'Paraguay',     away:'France',      score:[0,1],  kickoff:'2026-07-04T21:00Z', tz:'America/New_York' },
   { date:'2026-07-05', group:'R16', home:'Brazil',       away:'Norway',      score:[1,2],  kickoff:'2026-07-05T20:00Z', tz:'America/New_York' },
   { date:'2026-07-05', group:'R16', home:'Mexico',       away:'England',     score:[2,3],  kickoff:'2026-07-06T00:00Z', tz:'America/Mexico_City' },
-  { date:'2026-07-06', group:'R16', home:'Belgium',      away:'USA',         score:null,   kickoff:'2026-07-06T21:00Z', tz:'America/Los_Angeles' },
-  { date:'2026-07-06', group:'R16', home:'Portugal',     away:'Spain',       score:null,   kickoff:'2026-07-06T19:00Z', tz:'America/Chicago' },
+  { date:'2026-07-06', group:'R16', home:'Belgium',      away:'USA',         score:[4,1],  kickoff:'2026-07-06T21:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-06', group:'R16', home:'Portugal',     away:'Spain',       score:[0,1],  kickoff:'2026-07-06T19:00Z', tz:'America/Chicago' },
   { date:'2026-07-07', group:'R16', home:'Switzerland',  away:'Colombia',    score:null,   kickoff:'2026-07-07T20:00Z', tz:'America/Vancouver' },
   { date:'2026-07-07', group:'R16', home:'Argentina',    away:'Egypt',       score:null,   kickoff:'2026-07-07T16:00Z', tz:'America/New_York' },
 ];
@@ -1264,15 +1266,15 @@ const knockout = {
     { home:'Brazil',   away:'Norway',   homeScore:1, awayScore:2 },
     { home:'Paraguay', away:'France',   homeScore:0, awayScore:1 },
     { home:'Mexico',   away:'England',  homeScore:2, awayScore:3 },
-    { home:'Belgium', away:'USA', homeScore:null, awayScore:null },
-    { home:'Portugal', away:'Spain', homeScore:null, awayScore:null },
+    { home:'Belgium', away:'USA', homeScore:4, awayScore:1 },
+    { home:'Portugal', away:'Spain', homeScore:0, awayScore:1 },
     { home:'Switzerland', away:'Colombia', homeScore:null, awayScore:null },
     { home:'Argentina', away:'Egypt', homeScore:null, awayScore:null },
   ],
   qf: [
     { home:'Morocco', away:'France', homeScore:null, awayScore:null },
     { home:'Norway', away:'England', homeScore:null, awayScore:null },
-    { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
+    { home:'Belgium', away:'Spain', homeScore:null, awayScore:null },
     { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
   ],
   sf: Array(2).fill(null).map((_,i) => ({
