@@ -736,6 +736,19 @@
   .podium-avatar-3 { width: 56px; height: 56px; border: 2px solid #b45309; }
   .podium-avatar-4 { width: 46px; height: 46px; border: 2px solid var(--border); }
 
+  .podium-avatar-wrap { position: relative; display: inline-block; }
+  .podium-eliminated-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    font-size: 1.15rem;
+    line-height: 1;
+    background: var(--card);
+    border-radius: 50%;
+    padding: 2px;
+    border: 1px solid var(--border);
+  }
+
   /* LIVE badge */
   .live-badge {
     display: inline-block;
@@ -1032,7 +1045,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Round of 16 complete — Morocco, France, Norway, England, Belgium, Spain, Argentina and Switzerland through to the quarter-finals. QF matchups: Morocco v France, Norway v England, Belgium v Spain, Argentina v Switzerland.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Quarter-finals complete — France, England, Spain and Argentina through to the semi-finals. SF matchups: France v Spain (14 July), England v Argentina (15 July).</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1232,6 +1245,11 @@ const fixtures = [
   { date:'2026-07-06', group:'R16', home:'Portugal',     away:'Spain',       score:[0,1],  kickoff:'2026-07-06T19:00Z', tz:'America/Chicago' },
   { date:'2026-07-07', group:'R16', home:'Switzerland',  away:'Colombia',    score:[0,0],  penalties:'4-3', kickoff:'2026-07-07T20:00Z', tz:'America/Vancouver' },
   { date:'2026-07-07', group:'R16', home:'Argentina',    away:'Egypt',       score:[3,2],   kickoff:'2026-07-07T16:00Z', tz:'America/New_York' },
+  // ── QUARTER-FINALS ──
+  { date:'2026-07-09', group:'QF', home:'Morocco',      away:'France',      score:[0,2],  kickoff:'2026-07-09T20:00Z', tz:'America/New_York' },
+  { date:'2026-07-10', group:'QF', home:'Belgium',      away:'Spain',       score:[1,2],  kickoff:'2026-07-10T19:00Z', tz:'America/Los_Angeles' },
+  { date:'2026-07-11', group:'QF', home:'Norway',       away:'England',     score:[1,2],  kickoff:'2026-07-11T21:00Z', tz:'America/New_York' },
+  { date:'2026-07-11', group:'QF', home:'Argentina',    away:'Switzerland', score:[3,1],  kickoff:'2026-07-12T01:00Z', tz:'America/Chicago' },
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1272,14 +1290,15 @@ const knockout = {
     { home:'Argentina', away:'Egypt', homeScore:3, awayScore:2 },
   ],
   qf: [
-    { home:'Morocco', away:'France', homeScore:null, awayScore:null },
-    { home:'Norway', away:'England', homeScore:null, awayScore:null },
-    { home:'Belgium', away:'Spain', homeScore:null, awayScore:null },
-    { home:'Argentina', away:'Switzerland', homeScore:null, awayScore:null },
+    { home:'Morocco', away:'France', homeScore:0, awayScore:2 },
+    { home:'Norway', away:'England', homeScore:1, awayScore:2 },
+    { home:'Belgium', away:'Spain', homeScore:1, awayScore:2 },
+    { home:'Argentina', away:'Switzerland', homeScore:3, awayScore:1 },
   ],
-  sf: Array(2).fill(null).map((_,i) => ({
-    home:'TBD', away:'TBD', homeScore:null, awayScore:null
-  })),
+  sf: [
+    { home:'France', away:'Spain', homeScore:null, awayScore:null },
+    { home:'England', away:'Argentina', homeScore:null, awayScore:null },
+  ],
   bronze: { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
   final:  { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
 };
@@ -1549,9 +1568,13 @@ function renderLeaderboard(playerTotals) {
 
     const people = group.map(p => {
       const col = players[p.name].color;
+      const eliminated = p.teamsAlive === 0;
       return `<div class="podium-person">
         <div class="podium-medal">${medals[slotIdx]}</div>
-        <img class="podium-avatar ${avatarCl[slotIdx]}" src="${avatars[p.name]}" alt="${p.name}" onclick="openPlayerModal('${p.name}')" style="cursor:pointer;">
+        <div class="podium-avatar-wrap">
+          <img class="podium-avatar ${avatarCl[slotIdx]}" src="${avatars[p.name]}" alt="${p.name}" onclick="openPlayerModal('${p.name}')" style="cursor:pointer;">
+          ${eliminated ? `<span class="podium-eliminated-badge" title="${p.name} has no teams left">😢</span>` : ''}
+        </div>
         <div class="podium-name" style="color:${col}">${p.name}</div>
         <div class="podium-pts" style="color:${podiumColors[slotIdx]}">${p.total}</div>
         <div class="podium-sub" style="color:${podiumColors[slotIdx]}">points</div>
