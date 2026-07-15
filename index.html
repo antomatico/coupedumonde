@@ -1045,7 +1045,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Spain beat France 2-0 (14 July) to reach the final. England v Argentina (15 July) still to come — winner joins Spain in the final.</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Argentina came from behind to beat England 2-1 (15 July, Messi with two late assists) and will face Spain in the final on 19 July. France v England contest the 3rd/4th playoff on 18 July.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1252,10 +1252,10 @@ const fixtures = [
   { date:'2026-07-11', group:'QF', home:'Argentina',    away:'Switzerland', score:[3,1],  kickoff:'2026-07-12T01:00Z', tz:'America/Chicago' },
   // ── SEMI-FINALS ──
   { date:'2026-07-14', group:'SF', home:'France',       away:'Spain',       score:[0,2],  kickoff:'2026-07-14T19:00Z', tz:'America/Chicago' },
-  { date:'2026-07-15', group:'SF', home:'England',      away:'Argentina',   score:null,   kickoff:'2026-07-15T23:00Z', tz:'America/New_York' },
+  { date:'2026-07-15', group:'SF', home:'England',      away:'Argentina',   score:[1,2],  kickoff:'2026-07-15T23:00Z', tz:'America/New_York' },
   // ── 3RD/4TH PLAYOFF & FINAL ──
-  { date:'2026-07-18', group:'Bronze', home:'France',   away:'TBC',         score:null,   kickoff:'2026-07-18T21:00Z', tz:'America/New_York' },
-  { date:'2026-07-19', group:'Final',  home:'Spain',    away:'TBC',         score:null,   kickoff:'2026-07-19T19:00Z', tz:'America/New_York' },
+  { date:'2026-07-18', group:'Bronze', home:'France',   away:'England',     score:null,   kickoff:'2026-07-18T21:00Z', tz:'America/New_York' },
+  { date:'2026-07-19', group:'Final',  home:'Spain',    away:'Argentina',   score:null,   kickoff:'2026-07-19T19:00Z', tz:'America/New_York' },
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1303,10 +1303,10 @@ const knockout = {
   ],
   sf: [
     { home:'France', away:'Spain', homeScore:0, awayScore:2 },
-    { home:'England', away:'Argentina', homeScore:null, awayScore:null },
+    { home:'England', away:'Argentina', homeScore:1, awayScore:2 },
   ],
-  bronze: { home:'France', away:'TBD', homeScore:null, awayScore:null },
-  final:  { home:'Spain', away:'TBD', homeScore:null, awayScore:null },
+  bronze: { home:'France', away:'England', homeScore:null, awayScore:null },
+  final:  { home:'Spain', away:'Argentina', homeScore:null, awayScore:null },
 };
 
 // ============================================================
