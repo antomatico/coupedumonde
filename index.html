@@ -1045,7 +1045,7 @@
 
 <!-- ===== KNOCKOUT TAB ===== -->
 <section class="tab-section" id="tab-knockout">
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Quarter-finals complete — France, England, Spain and Argentina through to the semi-finals. SF matchups: France v Spain (14 July), England v Argentina (15 July).</p>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Spain beat France 2-0 (14 July) to reach the final. England v Argentina (15 July) still to come — winner joins Spain in the final.</p>
   <div class="bracket-container">
     <div class="bracket" id="bracket-container"></div>
   </div>
@@ -1250,6 +1250,8 @@ const fixtures = [
   { date:'2026-07-10', group:'QF', home:'Belgium',      away:'Spain',       score:[1,2],  kickoff:'2026-07-10T19:00Z', tz:'America/Los_Angeles' },
   { date:'2026-07-11', group:'QF', home:'Norway',       away:'England',     score:[1,2],  kickoff:'2026-07-11T21:00Z', tz:'America/New_York' },
   { date:'2026-07-11', group:'QF', home:'Argentina',    away:'Switzerland', score:[3,1],  kickoff:'2026-07-12T01:00Z', tz:'America/Chicago' },
+  // ── SEMI-FINALS ──
+  { date:'2026-07-14', group:'SF', home:'France',       away:'Spain',       score:[0,2],  kickoff:'2026-07-14T19:00Z', tz:'America/Chicago' },
 ];
 
 // Knockout bracket — fill in as tournament progresses
@@ -1296,7 +1298,7 @@ const knockout = {
     { home:'Argentina', away:'Switzerland', homeScore:3, awayScore:1 },
   ],
   sf: [
-    { home:'France', away:'Spain', homeScore:null, awayScore:null },
+    { home:'France', away:'Spain', homeScore:0, awayScore:2 },
     { home:'England', away:'Argentina', homeScore:null, awayScore:null },
   ],
   bronze: { home:'TBD', away:'TBD', homeScore:null, awayScore:null },
