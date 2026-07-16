@@ -2012,12 +2012,15 @@ function openWinnerModal() {
   document.getElementById('winner-modal-header').style.background =
     `linear-gradient(135deg, ${col}cc, ${col}44)`;
   document.getElementById('winner-modal-avatar').src = avatars[name];
-  document.getElementById('winner-modal-heading').textContent =
-    `Congratulations ${name}, winner with ${total} points!`;
+  document.getElementById('winner-modal-heading').innerHTML = `
+    Congratulations ${name}, winner with ${total} points!
+    <div style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-top:0.25rem;">(and there's still one game to go!)</div>
+  `;
   document.getElementById('winner-modal-body').innerHTML = `
-    <p style="margin:0 0 0.75rem;">You really showed your class with a beautifully randomised selection of 12 teams. Sadly, your 3 Lions 🦁🦁🦁 couldn't defend a 1-0 lead in their Semi 😢</p>
-    <p style="margin:0 0 0.75rem;">Fair to say we are all supporting Spain 🇪🇸 in the final. The points for winning won't be enough for James to leap frog you into 1st spot.</p>
-    <p style="margin:0;font-weight:700;">4 more years</p>
+    <p style="margin:0 0 0.75rem;">The points for winning won't be enough for James to leapfrog you into 1st spot.</p>
+    <p style="margin:0 0 0.75rem;">You really showed your class with a beautifully randomised selection of 12 teams. Sadly though, your 3 Lions 🦁🦁🦁 couldn't defend a 1-0 lead in their Semi 😢</p>
+    <p style="margin:0 0 0.75rem;font-weight:700;">4 more years</p>
+    <p style="margin:0;">Fair to say we are all supporting Spain 🇪🇸 in the final.</p>
   `;
   document.getElementById('winner-modal-backdrop').style.display = 'block';
   document.getElementById('winner-modal').style.display = 'block';
